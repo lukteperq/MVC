@@ -1,6 +1,7 @@
 <?php
 require_once('../app/init.php');
   $object = new Controller;
+  $app = new App();
 ?>
 <!DOCTYPE html>
 <html>
@@ -9,7 +10,7 @@ require_once('../app/init.php');
     <title>MVC framework</title>
   </head>
   <body>
-    <?php echo "index"; ?>
+    <?php //echo "index"; ?>
 
   </body>
 </html>
