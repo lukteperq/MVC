@@ -1,13 +1,8 @@
 <?php
+
+namespace Core;
+
 class Router{
-  /*matches controller/function....   snerk/skjiit.
-  *parantes fordi.   preg_match($regex, "skjiit/doThis", $matches) VIL GI
-  * [
-      controller => skjiit,
-      method => doThis
-    ]
-  */
-  //$regex = "/^(?P<controller>^[a-z]+)\/(?P<method>[a-z]+)$/";
 
   /**
    *  Associative Array with the routes (The routing table)
@@ -66,16 +61,6 @@ class Router{
      *  @return boolean true if found match
      */
      public function match($url){
-       /*
-       foreach($this->routes as $route => $params){
-         if($url == $route){
-           $this->params = $params;
-           return true;
-         }
-       }
-       return false;*/
-
-       //$reg_exp = "/^(?P<controller>^[a-z]+)\/(?P<method>[a-z]+)$/";
 
        foreach($this->routes as $route => $params){
          if(preg_match($route, $url, $matches)){
@@ -89,25 +74,6 @@ class Router{
          }
        }
        return false;
-
-
-      /* OLD
-      if(preg_match($reg_exp, $url, $matches)){
-        //get named capture group values, eg.. controller = skjiit
-        $params = [];
-
-        foreach($matches as $key => $match){
-          if(is_string($key)){
-            $params[$key] = $match;
-          }
-        }
-        $this->params = $params;
-        return true;
-      }
-      return false;
-      */
-
-
      }//match()
 
      public function getParams(){
@@ -118,6 +84,7 @@ class Router{
        if($this->match($url)){
          $controller = $this->params['controller'];
          $controller = $this->convertToStudlyCaps($controller); //eks: view-skjiit/snerk -> viewSkjiit  Controller
+         $controller = "App\Controllers\\$controller"; //adding namepsapce
 
          if(class_exists($controller)){
            $controllerObject = new $controller;

@@ -1,4 +1,6 @@
 <?php
+namespace App\Controllers;
+
 class Posts{
   public function index(){
     echo "idex method @ PostsController";
