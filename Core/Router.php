@@ -114,4 +114,39 @@ class Router{
        return $this->params;
      }
 
+     public function dispatch($url){
+       if($this->match($url)){
+         $controller = $this->params['controller'];
+         $controller = $this->convertToStudlyCaps($controller); //eks: view-skjiit/snerk -> viewSkjiit  Controller
+
+         if(class_exists($controller)){
+           $controllerObject = new $controller;
+           $action = $this->params['action'];
+           $action = $this->convertToCamelCase($action);
+
+           if(is_callable([$controllerObject, $action])){
+             $controllerObject->$action();
+
+           }else{//no method
+             echo "Method $action (in controller $controller) can not be found";
+           }
+         }else{//no class
+           echo "Controller class $controller can not be found";
+         }
+       }else{//no matchng RouteSetup
+         "No matching routeSetupd found";
+       }
+     }//dispatch()
+
+/**
+ * Converts String from some-class -> SomeClass
+ */
+     public function convertToStudlyCaps($string){
+       return str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
+     }//convertToStudlyCaps()
+
+     public function convertToCamelCase($string){
+       return lcfirst($this->convertToStudlyCaps($string));
+     }//convertToCamelCase()
+
 }//Class

@@ -1,6 +1,8 @@
 <?php
 require('../Core/Router.php');
+require('../app/Controllers/Posts.php');
 $router = new Router();
+
 //echo "\nClass = ".get_class($router);
 
 
@@ -22,7 +24,7 @@ echo "</pre>";
 //Match the requested route
 $url = $_SERVER['QUERY_STRING'];
 
-
+/*
 echo "<pre>";
 echo htmlspecialchars(print_r($router->getRoutes(), true));
 echo "</pre>";
@@ -34,7 +36,8 @@ if($router->match($url)){
 }else{
   echo "no route found for URL = ".$url;
 }
-
+*/
+$router->dispatch($url);
 
 
 //echo preg_replace("/(\w+) eller (\w+)/", '\1 ogsåFORHELVETE \2', "Meg eller deg");
